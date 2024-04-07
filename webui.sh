@@ -9,4 +9,4 @@ export PYTHONPATH="${CURRENT_DIR}:$PYTHONPATH"
 
 # export HF_ENDPOINT=https://hf-mirror.com
 
-streamlit run ./webui/Main.py --server.address="127.0.0.1"  --server.port=8501 --server.enableCORS=True --browser.gatherUsageStats=False
+streamlit run ./webui/Main.py --server.address="127.0.0.1"  --server.port=8501
