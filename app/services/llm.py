@@ -80,7 +80,7 @@ def _generate_response(prompt: str) -> str:
             # )
             # content = response["output"]["text"]
             # return content.replace("\n", "")
-            messages=[{"role": "user", "content": prompt}]
+            messages={"role": "user", "content": prompt}
             content = normalQwen(messages=messages)
             return content.replace("\n", "")
 
