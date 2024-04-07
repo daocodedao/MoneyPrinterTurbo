@@ -35,9 +35,11 @@ def search_videos(search_term: str,
     video_orientation = aspect.name
     video_width, video_height = aspect.to_resolution()
 
+    roundKey = round_robin_api_key()
     headers = {
-        "Authorization": round_robin_api_key()
+        "Authorization": roundKey
     }
+    logger.info(f"Authorization: {roundKey}")
     proxies = config.pexels.get("proxies", None)
     # Build URL
     params = {
