@@ -65,7 +65,7 @@ def _generate_response(prompt: str) -> str:
             raise ValueError("llm_provider is not set, please set it in the config.toml file.")
 
         if not api_key:
-            raise ValueError(f"{llm_provider}: api_key is not set, please set it in the config.toml file.")
+            raise ValueError(f"{llm_provider}: api_key {api_key}i s not set, please set it in the config.toml file.")
         if not model_name:
             raise ValueError(f"{llm_provider}: model_name is not set, please set it in the config.toml file.")
         if not base_url:
