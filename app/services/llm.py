@@ -8,6 +8,10 @@ from openai import AzureOpenAI
 import google.generativeai as genai
 from app.config import config
 
+# import 路径修改
+
+from app.utils.translateQwen import normalQwen
+
 def _generate_response(prompt: str) -> str:
     content = ""
     llm_provider = config.app.get("llm_provider", "openai")
@@ -68,14 +72,18 @@ def _generate_response(prompt: str) -> str:
             raise ValueError(f"{llm_provider}: base_url is not set, please set it in the config.toml file.")
 
         if llm_provider == "qwen":
-            import dashscope
-            dashscope.api_key = api_key
-            response = dashscope.Generation.call(
-                model=model_name,
-                messages=[{"role": "user", "content": prompt}]
-            )
-            content = response["output"]["text"]
+            # import dashscope
+            # dashscope.api_key = api_key
+            # response = dashscope.Generation.call(
+            #     model=model_name,
+            #     messages=[{"role": "user", "content": prompt}]
+            # )
+            # content = response["output"]["text"]
+            # return content.replace("\n", "")
+            messages=[{"role": "user", "content": prompt}]
+            content = normalQwen(messages=messages)
             return content.replace("\n", "")
+
 
         if llm_provider == "gemini":
             genai.configure(api_key=api_key)

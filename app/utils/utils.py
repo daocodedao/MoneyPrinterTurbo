@@ -174,3 +174,9 @@ def split_string_by_punctuations(s):
 def md5(text):
     import hashlib
     return hashlib.md5(text.encode('utf-8')).hexdigest()
+
+def getProxy():
+    if platform.system() == "Linux":
+        return "192.168.0.77:18808"
+    else:
+        return "127.0.0.1:10809"

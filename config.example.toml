@@ -17,7 +17,7 @@
     #   azure
     #   qwen (通义千问)
     #   gemini
-    llm_provider="openai"
+    llm_provider="qwen"
 
     ########## Ollama Settings
     # No need to set it unless you want to use your own proxy

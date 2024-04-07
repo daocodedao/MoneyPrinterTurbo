@@ -9,6 +9,15 @@ import streamlit.components.v1 as components
 import toml
 from loguru import logger
 
+# import 路径修改
+import sys,os
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+from app.utils.utils import getProxy
+
+os.environ['HTTP_PROXY'] = getProxy()
+os.environ['HTTPS_PROXY'] = getProxy()
+
+
 st.set_page_config(page_title="MoneyPrinterTurbo",
                    page_icon="🤖",
                    layout="wide",
@@ -37,21 +46,17 @@ song_dir = os.path.join(root_dir, "resource", "songs")
 i18n_dir = os.path.join(root_dir, "webui", "i18n")
 config_file = os.path.join(root_dir, "webui", ".streamlit", "webui.toml")
 
-
 def load_config() -> dict:
     try:
         return toml.load(config_file)
     except Exception as e:
         return {}
 
-
 cfg = load_config()
-
 
 def save_config():
     with open(config_file, "w", encoding="utf-8") as f:
         f.write(toml.dumps(cfg))
-
 
 def get_system_locale():
     try:
@@ -62,7 +67,6 @@ def get_system_locale():
         return language_code
     except Exception as e:
         return "en"
-
 
 if 'video_subject' not in st.session_state:
     st.session_state['video_subject'] = ''
@@ -82,7 +86,6 @@ def get_all_fonts():
                 fonts.append(file)
     return fonts
 
-
 def get_all_songs():
     songs = []
     for root, dirs, files in os.walk(song_dir):
@@ -90,7 +93,6 @@ def get_all_songs():
             if file.endswith(".mp3"):
                 songs.append(file)
     return songs
-
 
 def open_task_folder(task_id):
     try:
@@ -103,7 +105,6 @@ def open_task_folder(task_id):
                 os.system(f"open {path}")
     except Exception as e:
         logger.error(e)
-
 
 def scroll_to_bottom():
     js = f"""
@@ -120,7 +121,6 @@ def scroll_to_bottom():
     </script>
     """
     st.components.v1.html(js, height=0, width=0)
-
 
 def init_log():
     logger.remove()
@@ -150,9 +150,7 @@ def init_log():
         colorize=True,
     )
 
-
 init_log()
-
 
 def load_locales():
     locales = {}
@@ -164,14 +162,11 @@ def load_locales():
                     locales[lang] = json.loads(f.read())
     return locales
 
-
 locales = load_locales()
-
 
 def tr(key):
     loc = locales.get(st.session_state['ui_language'], {})
     return loc.get("Translation", {}).get(key, key)
-
 
 display_languages = []
 selected_index = 0
@@ -180,7 +175,9 @@ for i, code in enumerate(locales.keys()):
     if code == st.session_state['ui_language']:
         selected_index = i
 
-selected_language = st.selectbox("Language", options=display_languages, label_visibility='collapsed',
+selected_language = st.selectbox("Language", 
+                                 options=display_languages, 
+                                 label_visibility='collapsed',
                                  index=selected_index)
 if selected_language:
     code = selected_language.split(" - ")[0].strip()

@@ -12,6 +12,14 @@ from app.services import llm, material, voice, video, subtitle
 from app.services import state as sm
 from app.utils import utils
 
+# import 路径修改
+import sys,os
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+from app.utils.utils import getProxy
+
+os.environ['HTTP_PROXY'] = getProxy()
+os.environ['HTTPS_PROXY'] = getProxy()
+
 
 def start(task_id, params: VideoParams):
     """

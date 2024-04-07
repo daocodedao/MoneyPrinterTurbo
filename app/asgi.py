@@ -10,7 +10,11 @@ from app.config import config
 from app.models.exception import HttpException
 from app.router import root_api_router
 from app.utils import utils
+import os
+from app.utils.utils import getProxy
 
+os.environ['HTTP_PROXY'] = getProxy()
+os.environ['HTTPS_PROXY'] = getProxy()
 
 def exception_handler(request: Request, e: HttpException):
     return JSONResponse(
